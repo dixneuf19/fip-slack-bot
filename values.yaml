@@ -1,0 +1,52 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: dixneuf19/fip-slack-bot
+  tag: latest
+  pullPolicy: Always
+
+container:
+  port: 80
+  probe: 
+
+resources:
+  limits:
+    memory: '128Mi'
+    cpu: '300m'
+  requests:
+    memory: '64Mi'
+    cpu: '100m'
+
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  ingressClassName: traefik
+  annotations: 
+    cert-manager.io/cluster-issuer: letsencrypt
+  hosts: 
+  - host: "fip-slack-bot.dixneuf19.me"
+    paths:
+      - path: "/"
+  tls:
+    - hosts:
+      - "fip-slack-bot.dixneuf19.me"
+      secretName: fip-slack-bot-dixneuf19-me-tls
+
+configmap: 
+ FIP_API_HOST: "whats-on-fip"
+ FIP_API_PORT: 1919
+
+secrets:
+  - name: fip-slack-bot
+    key: SLACK_CLIENT_ID
+  - name: fip-slack-bot
+    key: SLACK_CLIENT_SECRET
+  - name: fip-slack-bot
+    key: SLACK_SIGNING_SECRET
