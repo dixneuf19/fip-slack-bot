@@ -30,6 +30,7 @@ app = App(
 # Listens to incoming messages that contain "hello"
 @app.command("/whatsonfip")
 def message_live(ack, say, command):
+    logger.info("Received /whatsonfip command")
     ack()
     try:
         track = get_live_on_FIP()
@@ -44,4 +45,6 @@ def message_live(ack, say, command):
 
 # Start your app
 if __name__ == "__main__":
-    app.start(port=int(os.environ.get("PORT", 3000)))
+    logger.info("Starting server")
+    app.start(port=int(os.environ.get("SERVER_PORT", 3000)))
+    logger.info("Server started")

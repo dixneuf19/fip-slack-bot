@@ -9,7 +9,7 @@ image:
   pullPolicy: Always
 
 container:
-  port: 80
+  port: 3000
   probe: 
 
 resources:
@@ -40,8 +40,9 @@ ingress:
       secretName: fip-slack-bot-dixneuf19-me-tls
 
 configmap: 
- FIP_API_HOST: "whats-on-fip"
- FIP_API_PORT: 1919
+  FIP_API_HOST: "whats-on-fip"
+  FIP_API_PORT: 1919
+  SERVER_PORT: 3000
 
 secrets:
   - name: fip-slack-bot
