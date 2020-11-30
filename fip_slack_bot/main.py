@@ -2,8 +2,9 @@ import os
 
 from dotenv import load_dotenv
 from loguru import logger
-from slack_bolt.async_app import AsyncApp
-from slack_bolt.adapter.fastapi.async_handler import AsyncSlackRequestHandler
+
+from slack_bolt import App
+from slack_bolt.adapter.fastapi import SlackRequestHandler
 from slack_bolt.oauth.oauth_settings import OAuthSettings
 from slack_sdk.oauth.installation_store import FileInstallationStore
 from slack_sdk.oauth.state_store import FileOAuthStateStore
@@ -23,11 +24,11 @@ oauth_settings = OAuthSettings(
 )
 
 # Initializes your app with your bot token and signing secret
-app = AsyncApp(
+app = App(
     signing_secret=os.environ.get("SLACK_SIGNING_SECRET"),
     oauth_settings=oauth_settings
 )
-app_handler = AsyncSlackRequestHandler(app)
+app_handler = SlackRequestHandler(app)
 
 # Listens to incoming messages that contain "hello"
 @app.command("/whatsonfip")
