@@ -2,7 +2,8 @@ import os
 
 from dotenv import load_dotenv
 from loguru import logger
-from slack_bolt import App
+from slack_bolt.async_app import AsyncApp
+from slack_bolt.adapter.fastapi.async_handler import AsyncSlackRequestHandler
 from slack_bolt.oauth.oauth_settings import OAuthSettings
 from slack_sdk.oauth.installation_store import FileInstallationStore
 from slack_sdk.oauth.state_store import FileOAuthStateStore
@@ -22,10 +23,11 @@ oauth_settings = OAuthSettings(
 )
 
 # Initializes your app with your bot token and signing secret
-app = App(
+app = AsyncApp(
     signing_secret=os.environ.get("SLACK_SIGNING_SECRET"),
     oauth_settings=oauth_settings
 )
+app_handler = AsyncSlackRequestHandler(app)
 
 # Listens to incoming messages that contain "hello"
 @app.command("/whatsonfip")
@@ -43,8 +45,23 @@ def message_live(ack, say, command):
         say(blocks=blocks, text=text)
 
 
-# Start your app
-if __name__ == "__main__":
-    logger.info("Starting server")
-    app.start(port=int(os.environ.get("SERVER_PORT", 3000)))
-    logger.info("Server started")
+from fastapi import FastAPI, Request
+
+api = FastAPI()
+
+
+@api.post("/slack/events")
+async def endpoint(req: Request):
+    return await app_handler.handle(req)
+
+
+@api.get("/slack/install")
+async def install(req: Request):
+    return await app_handler.handle(req)
+
+
+@api.get("/slack/oauth_redirect")
+async def oauth_redirect(req: Request):
+    return await app_handler.handle(req)
+
+

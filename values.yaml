@@ -42,7 +42,6 @@ ingress:
 configmap: 
   FIP_API_HOST: "whats-on-fip"
   FIP_API_PORT: 1919
-  SERVER_PORT: 3000
 
 secrets:
   - name: fip-slack-bot

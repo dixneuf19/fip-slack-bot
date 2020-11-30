@@ -5,6 +5,6 @@ RUN pip install -r requirements.txt
 
 COPY fip_slack_bot fip_slack_bot
 
-ENV PYTHONPATH=.
+EXPOSE 3000
 
-CMD ["python", "fip_slack_bot/main.py"]
+CMD ["uvicorn", "fip_slack_bot.main:api" , "--host", "0.0.0.0", "--port", "3000"]
