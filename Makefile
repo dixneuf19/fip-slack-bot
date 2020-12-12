@@ -38,7 +38,7 @@ release-multi:
 	docker buildx build --platform linux/amd64,linux/arm64,linux/386,linux/arm/v7 -t $(DOCKER_IMAGE_PATH) . --push
 
 deploy:
-	kubectl apply -f $(APP_NAME).yaml
+	helm upgrade -i ${APP_NAME} dixneuf19/base-helm-chart -f values.yaml
 
 secret:
 	kubectl create secret generic fip-slack-bot --from-env-file=.env

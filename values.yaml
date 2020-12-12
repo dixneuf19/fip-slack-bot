@@ -10,7 +10,7 @@ image:
 
 container:
   port: 3000
-  probe: 
+  probe:
 
 resources:
   limits:
@@ -50,3 +50,21 @@ secrets:
     key: SLACK_CLIENT_SECRET
   - name: fip-slack-bot
     key: SLACK_SIGNING_SECRET
+
+persistence:
+  enabled: true
+  pvc:
+    name: slack-oauth-credentials
+    storageClassName: nfs-client
+    accessModes:
+    - ReadWriteMany
+    storageRequest: 1Mi
+
+volumeMounts:
+  - mountPath: "/data"
+    name: credentials
+
+volumes:
+  - name: credentials
+    persistentVolumeClaim:
+      claimName: slack-oauth-credentials
