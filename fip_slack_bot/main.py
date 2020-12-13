@@ -65,4 +65,6 @@ async def install(req: Request):
 async def oauth_redirect(req: Request):
     return await app_handler.handle(req)
 
-
+@api.get("/health")
+async def get_health():
+    return {"message": "OK"}

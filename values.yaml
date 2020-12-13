@@ -11,6 +11,10 @@ image:
 container:
   port: 3000
   probe:
+    liveness:
+      path: /health
+    readiness:
+      path: /health
 
 resources:
   limits:
