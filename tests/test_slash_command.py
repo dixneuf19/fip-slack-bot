@@ -1,3 +1,4 @@
+# Source: https://github.com/slackapi/bolt-python/blob/main/tests/scenario_tests/test_slash_command.py
 import json
 from time import time, sleep
 from typing import Tuple
@@ -97,8 +98,6 @@ class TestSlashCommand:
         assert response.status == 404
         assert self.mock_received_requests["/auth.test"] == 1
 
-    # Custom part
-
     def build_custom_valid_request(self, slash_body: Tuple[str]) -> BoltRequest:
         timestamp, body = str(int(time())), json.dumps(slash_body)
         return BoltRequest(body=body, headers=self.build_headers(timestamp, body))
@@ -158,8 +157,6 @@ whatsonfip_command_body = (
     "&response_url=https%3A%2F%2Fhooks.slack.com%2Fcommands%2FT111%2F111%2Fxxxxx"
     "&trigger_id=111.111.xxx"
 )
-
-# whatsonfip_command_result =
 
 slash_command_body = (
     "token=verification_token"
