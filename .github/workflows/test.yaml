@@ -1,0 +1,32 @@
+name: Test
+
+on: [push]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8, 3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Format with black
+      run: |
+        make check-format
+    - name: Test with pytest
+      env: 
+        SLACK_CLIENT_ID: slack-client-id
+        SLACK_CLIENT_SECRET: slack-client-secret
+      run: |
+        make test

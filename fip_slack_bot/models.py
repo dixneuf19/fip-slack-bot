@@ -13,6 +13,7 @@ class Track(BaseModel):
     external_urls: Dict[str, str] = {}
     cover_url: Optional[str]
 
+
 class ExternalURL(BaseModel):
     url: str
     provider: str

@@ -1,6 +1,8 @@
 # Can contain secret API token
 .env
 
+/.vscode
+
 # -------------- Python --------------
 # From https://github.com/github/gitignore/blob/master/Python.gitignore
 

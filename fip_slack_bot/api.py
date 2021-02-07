@@ -17,9 +17,7 @@ class LiveFIPException(Exception):
 
 
 def get_live_on_FIP() -> Track:
-    service_address = (
-        f"http://{FIP_API_HOST}:{FIP_API_PORT}/live?station=FIP"
-    )
+    service_address = f"http://{FIP_API_HOST}:{FIP_API_PORT}/live?station=FIP"
     logger.info(f"Fetching live info from {service_address}")
     r = requests.get(service_address)
     if r.status_code == codes.ok:
