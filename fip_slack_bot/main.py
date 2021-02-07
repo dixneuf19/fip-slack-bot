@@ -32,7 +32,9 @@ app_handler = SlackRequestHandler(app)
 # Listens to incoming messages that contain "hello"
 @app.command("/whatsonfip")
 def message_live(ack, say, command):
-    logger.info("Received /whatsonfip command")
+    logger.info(
+        f"Received /whatsonfip command from {command['user_name']} in {command['channel_name']} - {command['team_domain']}"
+    )
     ack()
     try:
         track = get_live_on_FIP()
