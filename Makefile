@@ -1,4 +1,4 @@
-.PHONY: dev build run push release release-multi deploy
+.PHONY: install install-dev dev build run push release release-multi deploy
 
 DOCKER_REPOSITERY=dixneuf19
 IMAGE_NAME=fip-slack-bot
@@ -6,6 +6,12 @@ IMAGE_TAG=$(shell git rev-parse --short HEAD)
 DOCKER_IMAGE_PATH=$(DOCKER_REPOSITERY)/$(IMAGE_NAME):$(IMAGE_TAG)
 APP_NAME=fip-slack-bot
 KUBE_NAMESPACE=fip
+
+install:
+	pip install -r requirements.txt
+
+install-dev: install
+	pip install -r requirements-dev.txt
 
 dev:
 	PYTHONPATH=. python fip_slack_bot/main.py
