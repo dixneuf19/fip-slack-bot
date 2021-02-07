@@ -20,13 +20,12 @@ oauth_settings = OAuthSettings(
     client_secret=os.environ.get("SLACK_CLIENT_SECRET"),
     scopes=["commands", "chat:write"],
     installation_store=FileInstallationStore(base_dir="./data"),
-    state_store=FileOAuthStateStore(expiration_seconds=600, base_dir="./data")
+    state_store=FileOAuthStateStore(expiration_seconds=600, base_dir="./data"),
 )
 
 # Initializes your app with your bot token and signing secret
 app = App(
-    signing_secret=os.environ.get("SLACK_SIGNING_SECRET"),
-    oauth_settings=oauth_settings
+    signing_secret=os.environ.get("SLACK_SIGNING_SECRET"), oauth_settings=oauth_settings
 )
 app_handler = SlackRequestHandler(app)
 
@@ -64,6 +63,7 @@ async def install(req: Request):
 @api.get("/slack/oauth_redirect")
 async def oauth_redirect(req: Request):
     return await app_handler.handle(req)
+
 
 @api.get("/health")
 async def get_health():
