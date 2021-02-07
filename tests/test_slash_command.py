@@ -166,7 +166,7 @@ whatsonfip_result_body = {
     "blocks": [
         {
             "type": "section",
-            "text": {"type": "mrkdwn", "text": "*Live on FIP !*"},
+            "text": {"type": "mrkdwn", "text": "*Live on FIP !* for <@W111>"},
             "accessory": {
                 "type": "button",
                 "text": {"type": "plain_text", "text": "Listen :radio:", "emoji": True},

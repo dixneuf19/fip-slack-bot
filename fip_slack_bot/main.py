@@ -40,7 +40,7 @@ def message_live(ack, say, command):
         say(text="No live song information right now, is it _Club Jazzafip_ ?")
     else:
         logger.debug(f"Fetched from FIP API: {track}")
-        blocks = get_blocks(track)
+        blocks = get_blocks(track, command["user_id"])
         text = get_text(track)
         say(blocks=blocks, text=text)
 
