@@ -121,8 +121,11 @@ class TestSlashCommand:
         # might be asynchronous
         sleep(0.1)
         assert response.status == 200
-        assert self.mock_received_requests["/auth.test"] == 1
-        print(self.mock_received_requests_body)
+        assert self.mock_received_requests["/chat.postMessage"] == 1
+        assert (
+            self.mock_received_requests_body["/chat.postMessage"][0]
+            == whatsonfip_result_body
+        )
 
 
 resp_get_live_on_FIP = Track(
@@ -157,6 +160,77 @@ whatsonfip_command_body = (
     "&response_url=https%3A%2F%2Fhooks.slack.com%2Fcommands%2FT111%2F111%2Fxxxxx"
     "&trigger_id=111.111.xxx"
 )
+
+whatsonfip_result_body = {
+    "text": "*Root down (and get it)*\n_Jimmy Smith_\nRoot down (live) - 1972",
+    "blocks": [
+        {
+            "type": "section",
+            "text": {"type": "mrkdwn", "text": "*Live on FIP !*"},
+            "accessory": {
+                "type": "button",
+                "text": {"type": "plain_text", "text": "Listen :radio:", "emoji": True},
+                "value": "Listen to FIP",
+                "url": "https://www.fip.fr",
+                "action_id": "FIP",
+            },
+        },
+        {"type": "divider"},
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "*Root down (and get it)*\n_Jimmy Smith_\nRoot down (live) - 1972",
+            },
+            "accessory": {
+                "type": "image",
+                "image_url": "https://cdn.radiofrance.fr/s3/cruiser-production/2019/12/afe28a90-5f53-46f9-b8ad-f0afa0c59c4d/266x266_rf_omm_0000230568_dnc.0057956636.jpg",
+                "alt_text": "Root down (and get it), by Jimmy Smith",
+            },
+        },
+        {"type": "divider"},
+        {
+            "type": "actions",
+            "elements": [
+                {
+                    "type": "button",
+                    "text": {"type": "plain_text", "text": "Spotify", "emoji": True},
+                    "value": "Listen on Spotify",
+                    "url": "https://open.spotify.com/track/19PG9tIlRRi56n7Tgywkxm",
+                    "action_id": "spotify",
+                },
+                {
+                    "type": "button",
+                    "text": {"type": "plain_text", "text": "Deezer", "emoji": True},
+                    "value": "Listen on Deezer",
+                    "url": "https://www.deezer.com/track/2461366",
+                    "action_id": "deezer",
+                },
+                {
+                    "type": "button",
+                    "text": {"type": "plain_text", "text": "iTunes", "emoji": True},
+                    "value": "Listen on iTunes",
+                    "url": "https://music.apple.com/fr/album/root-down-and-get-it-alternate-take/1442939892?i=1442940484&uo=4",
+                    "action_id": "itunes",
+                },
+            ],
+        },
+        {
+            "type": "context",
+            "elements": [
+                {
+                    "type": "image",
+                    "image_url": "https://upload.wikimedia.org/wikipedia/fr/thumb/d/d5/FIP_logo_2005.svg/240px-FIP_logo_2005.svg.png",
+                    "alt_text": "FIP",
+                },
+                {"type": "mrkdwn", "text": "Try */whatsonfip* yourself !\n"},
+            ],
+        },
+    ],
+    "attachments": None,
+    "thread_ts": None,
+    "channel": "C111",
+}
 
 slash_command_body = (
     "token=verification_token"

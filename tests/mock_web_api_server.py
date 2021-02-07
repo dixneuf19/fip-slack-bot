@@ -130,12 +130,9 @@ class MockHandler(SimpleHTTPRequestHandler):
                             k: v[0] for k, v in parse_qs(parsed_path.query).items()
                         }
 
-                self.logger.info(f"request body: {request_body}")
                 if self.path not in self.received_requests_body:
                     self.received_requests_body[self.path] = []
-
                 self.received_requests_body[self.path].append(request_body)
-                print(f"request body: {self.received_requests_body}")
 
                 header = self.headers["authorization"]
                 pattern = str(header).split("xoxb-", 1)[1]
