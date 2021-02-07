@@ -74,8 +74,8 @@ jobs:
           push: true
           tags: ${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}
           platforms: ${{ env.TARGET_PLATFORMS }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          # cache-from: type=local,src=/tmp/.buildx-cache
+          # cache-to: type=local,dest=/tmp/.buildx-cache
 
 
   deploy:
