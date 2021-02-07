@@ -6,6 +6,7 @@ IMAGE_TAG=$(shell git rev-parse --short HEAD)
 DOCKER_IMAGE_PATH=$(DOCKER_REPOSITERY)/$(IMAGE_NAME):$(IMAGE_TAG)
 APP_NAME=fip-slack-bot
 KUBE_NAMESPACE=fip
+TARGET_PLATFORMS = "linux/amd64,linux/arm64,linux/386"
 
 install:
 	pip install -r requirements.txt
@@ -29,7 +30,7 @@ build:
 	docker build -t $(DOCKER_IMAGE_PATH) .
 
 build-multi:
-	docker buildx build --platform linux/amd64,linux/arm64,linux/386,linux/arm/v7 -t $(DOCKER_IMAGE_PATH) .
+	docker buildx build --platform "${TARGET_PLATFORMS}" -t $(DOCKER_IMAGE_PATH) .
 
 
 run: build
@@ -41,10 +42,10 @@ push:
 release: build push
 
 release-multi:
-	docker buildx build --platform linux/amd64,linux/arm64,linux/386,linux/arm/v7 -t $(DOCKER_IMAGE_PATH) . --push
+	docker buildx build --platform "${TARGET_PLATFORMS}" -t $(DOCKER_IMAGE_PATH) . --push
 
 deploy:
-	helm upgrade -i ${APP_NAME} dixneuf19/base-helm-chart -f values.yaml
+	helm upgrade -i ${APP_NAME} dixneuf19/base-helm-chart -f values.yaml --set image.tag=${IMAGE_TAG}
 
 secret:
 	kubectl create secret generic fip-slack-bot --from-env-file=.env

@@ -1,20 +1,8 @@
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 from fip_slack_bot.models import Track, ExternalURL
 
 external_url_provider_order = ["spotify", "youtube", "deezer", "itunes"]
-
-fip_radio_section = {
-    "type": "section",
-    "text": {"type": "mrkdwn", "text": "*Live on FIP !*"},
-    "accessory": {
-        "type": "button",
-        "text": {"type": "plain_text", "text": "Listen :radio:", "emoji": True},
-        "value": "Listen to FIP",
-        "url": "https://www.fip.fr",
-        "action_id": "FIP",
-    },
-}
 
 default_context = {
     "type": "context",
@@ -39,6 +27,24 @@ telegram_context = {
         {"type": "mrkdwn", "text": "Also available on _Telegram_ @FIP_radio_bot"},
     ],
 }
+
+
+def get_fip_radio_section(user_id: Optional[str] = ""):
+    text = "*Live on FIP !*"
+    if user_id and user_id != "":
+        text += f" for <@{user_id}>"
+
+    return {
+        "type": "section",
+        "text": {"type": "mrkdwn", "text": text},
+        "accessory": {
+            "type": "button",
+            "text": {"type": "plain_text", "text": "Listen :radio:", "emoji": True},
+            "value": "Listen to FIP",
+            "url": "https://www.fip.fr",
+            "action_id": "FIP",
+        },
+    }
 
 
 def get_external_url_provider_name(external_url_provider: str) -> str:
@@ -107,10 +113,10 @@ def get_external_url_buttons(track: Track) -> List[Dict[str, Any]]:
     return buttons
 
 
-def get_blocks(track: Track) -> List[Dict[str, Any]]:
+def get_blocks(track: Track, user_id: Optional[str] = "") -> List[Dict[str, Any]]:
     blocks = []
 
-    blocks.append(fip_radio_section)
+    blocks.append(get_fip_radio_section(user_id))
 
     blocks.append({"type": "divider"})
 
