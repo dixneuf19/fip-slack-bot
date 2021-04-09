@@ -12,6 +12,7 @@ from slack_sdk.oauth.state_store import FileOAuthStateStore
 
 from fip_slack_bot.fmt import get_blocks, get_text
 from fip_slack_bot.api import get_live_on_FIP, LiveFIPException
+from fip_slack_bot.models import FIP_RADIO, MEUH_RADIO
 
 load_dotenv()
 
@@ -42,7 +43,7 @@ def message_live(ack, say, command):
         say(text="No live song information right now, is it _Club Jazzafip_ ?")
     else:
         logger.debug(f"Fetched from FIP API: {track}")
-        blocks = get_blocks(track, command["user_id"])
+        blocks = get_blocks(track, FIP_RADIO, command["user_id"])
         text = get_text(track)
         say(blocks=blocks, text=text)
 

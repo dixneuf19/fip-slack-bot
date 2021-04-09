@@ -1,6 +1,7 @@
 from typing import Dict, Any, List, Optional
 
-from fip_slack_bot.models import Track, ExternalURL
+from fip_slack_bot.models import Track, ExternalURL, Radio
+from fip_slack_bot.models import FIP_RADIO, MEUH_RADIO
 
 external_url_provider_order = ["spotify", "youtube", "deezer", "itunes"]
 
@@ -29,8 +30,8 @@ telegram_context = {
 }
 
 
-def get_fip_radio_section(user_id: Optional[str] = ""):
-    text = "*Live on FIP !*"
+def get_radio_section(radio: Radio, user_id: Optional[str] = ""):
+    text = f"*Live on {radio.name} !*"
     if user_id and user_id != "":
         text += f" for <@{user_id}>"
 
@@ -40,9 +41,9 @@ def get_fip_radio_section(user_id: Optional[str] = ""):
         "accessory": {
             "type": "button",
             "text": {"type": "plain_text", "text": "Listen :radio:", "emoji": True},
-            "value": "Listen to FIP",
-            "url": "https://www.fip.fr",
-            "action_id": "FIP",
+            "value": f"Listen to {radio.name}",
+            "url": radio.url,
+            "action_id": radio.name,
         },
     }
 
@@ -113,10 +114,12 @@ def get_external_url_buttons(track: Track) -> List[Dict[str, Any]]:
     return buttons
 
 
-def get_blocks(track: Track, user_id: Optional[str] = "") -> List[Dict[str, Any]]:
+def get_blocks(
+    track: Track, radio: Radio, user_id: Optional[str] = ""
+) -> List[Dict[str, Any]]:
     blocks = []
 
-    blocks.append(get_fip_radio_section(user_id))
+    blocks.append(get_radio_section(radio, user_id))
 
     blocks.append({"type": "divider"})
 
