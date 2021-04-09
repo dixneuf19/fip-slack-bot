@@ -18,3 +18,12 @@ class ExternalURL(BaseModel):
     url: str
     provider: str
     name: str
+
+
+class Radio(BaseModel):
+    name: str
+    url: str
+
+
+FIP_RADIO = Radio(name="FIP", url="https://www.fip.fr")
+MEUH_RADIO = Radio(name="RadioMeuh", url="https://www.radiomeuh.com/")
