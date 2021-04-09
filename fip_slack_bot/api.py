@@ -37,3 +37,13 @@ def get_radio_france_api_status() -> str:
         return "Radio France OpenAPI is up"
     else:
         return f"Radio France OpenAPI is down with error code '{r.status_code}'"
+
+
+def get_live_on_meuh() -> Track:
+    service_address = f"http://{FIP_API_HOST}:{FIP_API_PORT}/meuh"
+    logger.info(f"Fetching live info from {service_address}")
+    r = requests.get(service_address)
+    if r.status_code == codes.ok:
+        return Track(**r.json())
+
+    r.raise_for_status()

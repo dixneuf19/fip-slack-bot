@@ -11,7 +11,7 @@ from slack_sdk.oauth.state_store import FileOAuthStateStore
 
 
 from fip_slack_bot.fmt import get_blocks, get_text
-from fip_slack_bot.api import get_live_on_FIP, LiveFIPException
+from fip_slack_bot.api import get_live_on_FIP, LiveFIPException, get_live_on_meuh
 from fip_slack_bot.models import FIP_RADIO, MEUH_RADIO
 
 load_dotenv()
@@ -30,7 +30,7 @@ app = App(
 )
 app_handler = SlackRequestHandler(app)
 
-# Listens to incoming messages that contain "hello"
+
 @app.command("/whatsonfip")
 def message_live(ack, say, command):
     logger.info(
@@ -46,6 +46,20 @@ def message_live(ack, say, command):
         blocks = get_blocks(track, FIP_RADIO, command["user_id"])
         text = get_text(track)
         say(blocks=blocks, text=text)
+
+
+@app.command("/meuh")
+def message_meuh(ack, say, command):
+    logger.info(
+        f"Received /meuh command from {command['user_name']} in {command['channel_name']} - {command['team_domain']}"
+    )
+    ack()
+    track = get_live_on_meuh()
+    logger.debug(f"Fetched from FIP API: {track}")
+    blocks = get_blocks(track, MEUH_RADIO, command["user_id"])
+    text = get_text(track)
+    print(blocks)
+    say(blocks=blocks, text=text)
 
 
 from fastapi import FastAPI, Request
