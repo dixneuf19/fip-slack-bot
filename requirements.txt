@@ -3,5 +3,5 @@ loguru==0.5.3
 pydantic==1.8.1
 python-dotenv==0.17.0
 requests==2.25.1
-slack-bolt==1.4.4
+slack-bolt==1.5.0
 uvicorn==0.13.4
