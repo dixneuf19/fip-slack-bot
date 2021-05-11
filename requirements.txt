@@ -1,6 +1,6 @@
 fastapi==0.63.0
 loguru==0.5.3
-pydantic==1.8.1
+pydantic==1.8.2
 python-dotenv==0.17.1
 requests==2.25.1
 slack-bolt==1.5.0
