@@ -273,6 +273,8 @@ whatsonfip_result_body = {
     "attachments": None,
     "thread_ts": None,
     "channel": "C111",
+    "unfurl_links": None,
+    "unfurl_media": None,
 }
 
 meuh_result_body = {
@@ -344,6 +346,8 @@ meuh_result_body = {
     "attachments": None,
     "thread_ts": None,
     "channel": "C111",
+    "unfurl_links": None,
+    "unfurl_media": None,
 }
 
 slash_command_body = (
