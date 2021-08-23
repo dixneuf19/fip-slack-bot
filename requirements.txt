@@ -4,4 +4,4 @@ pydantic==1.8.2
 python-dotenv==0.19.0
 requests==2.26.0
 slack-bolt==1.8.0
-uvicorn==0.14.0
+uvicorn==0.15.0
