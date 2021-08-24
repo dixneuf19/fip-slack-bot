@@ -1,4 +1,4 @@
-fastapi==0.68.0
+fastapi==0.68.1
 loguru==0.5.3
 pydantic==1.8.2
 python-dotenv==0.19.0
