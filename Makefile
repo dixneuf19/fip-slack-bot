@@ -34,7 +34,7 @@ build-multi:
 
 
 run: build
-	docker run -p 8000:80 --env-file=.env $(DOCKER_IMAGE_PATH)
+	docker run -p 3000:3000 --env-file=.env $(DOCKER_IMAGE_PATH)
 
 push:
 	docker push $(DOCKER_IMAGE_PATH)
