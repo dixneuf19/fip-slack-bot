@@ -271,6 +271,7 @@ whatsonfip_result_body = {
         },
     ],
     "channel": "C111",
+    "team_id": "T111",
 }
 
 meuh_result_body = {
@@ -340,6 +341,7 @@ meuh_result_body = {
         },
     ],
     "channel": "C111",
+    "team_id": "T111",
 }
 
 slash_command_body = (
