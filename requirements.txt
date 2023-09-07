@@ -1,5 +1,5 @@
 fastapi==0.103.1
-loguru==0.7.0
+loguru==0.7.1
 pydantic==1.10.12
 python-dotenv==0.21.1
 requests==2.31.0
