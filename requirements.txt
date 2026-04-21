@@ -1,7 +1,7 @@
 fastapi==0.135.3
 loguru==0.7.2
 pydantic==1.10.26
-python-dotenv==0.21.1
+python-dotenv==1.2.2
 requests==2.33.1
 slack-bolt==1.18.0
 uvicorn==0.43.0
